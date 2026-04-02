@@ -16,15 +16,12 @@ class NotebookApp:
         self.style = ttk.Style()
         self.style.layout("Tabless.TNotebook.Tab", [])
         
-        try:
-            self.df = pd.read_csv('calendar_data.csv')
-        except FileNotFoundError:
-            print("CSV not found. Ensure 'calendar_data.csv' is in the folder.")
-            self.df = pd.DataFrame()
+        self.df = pd.read_csv('calendar_data.csv')
+
 
         self.day_map = {'Sunday': 0, 'Monday': 1, 'Tuesday': 2, 'Wednesday': 3,
                         'Thursday': 4, 'Friday': 5, 'Saturday': 6}
-        self.open_tabs = {} # Track open day-tabs
+        self.open_tabs = {}
 
         self.setup_main_nav()
 
@@ -49,9 +46,9 @@ class NotebookApp:
         self.setup_calendar_tab()
 
     def setup_home_tab(self):
-        ttk.Label(self.tab1, text="Notebook Home", font=("Arial", 18)).pack(pady=20)
+        ttk.Label(self.tab1, text="Notebook Home", font=("Comic Sans MS", 18)).pack(pady=20)
         
-        upload_btn = tk.Button(self.tab1, text="Add Image", command=lambda: self.add_image(self.tab1))
+        upload_btn = tk.Button(self.tab1, text="Add Image", font=("Comic Sans MS", 10),  command=lambda: self.add_image(self.tab1))
         upload_btn.pack(side=tk.LEFT, anchor=tk.NW, pady=20)
         addtextbtn = tk.Button(self.tab1, text="Add Text", command=lambda: self.add_text(self.tab1))
         addtextbtn.pack(side=tk.LEFT,anchor=tk.NW , pady=20)
@@ -108,8 +105,8 @@ class NotebookApp:
         self.open_tabs[date_str] = day_frame
         
         # day content
-        tk.Label(day_frame, text=f"Notes for {date_str}", font=("Arial", 14)).pack(pady=10)
-        txt = tk.Text(day_frame, height=15)
+        tk.Label(day_frame, text=f"Notes for {date_str}", font=("Comic Sans MS", 14)).pack(pady=10)
+        txt = tk.Text(day_frame, height=15, font=("Comic Sans MS", 14))
         txt.pack(expand=True, fill="both", padx=10, pady=5)
         
         upload_btn = tk.Button(day_frame, text="Add Image", command=lambda: self.add_image(day_frame))
@@ -148,7 +145,6 @@ class NotebookApp:
         if file_path:
             original_img = Image.open(file_path)
             
-            # Optional: Resize to fit the widget (e.g., 300x300)
             resized_img = original_img.resize((300, 300), Image.Resampling.LANCZOS)
             tk_img = ImageTk.PhotoImage(resized_img)
             image_label.config(image=tk_img)
